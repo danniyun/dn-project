@@ -44,7 +44,7 @@ def calculate_daily_pnl_metrics(pnl_file):
             'to': group['Date'].iloc[-1][:4],
             'long': 10,
             'short': -10,
-            'return%': ret,
+            'return': ret,
             'turnover': turnover,
             'max_drawdown': max_drawdown  # Maximum drawdown in percentage
         })
@@ -70,11 +70,11 @@ def calculate_monthly_pnl_metrics(daily_pnl_summary):
         # Calculate other metrics (sum or average) for the month as needed
         long = group['long'].sum()
         short = group['short'].sum()
-        ret = group['return%'].sum()
+        ret = group['return'].sum()
         turnover = group['turnover'].mean()
         
         # Calculate the Sharpe ratio: (mean return) / (std return) * sqrt(20) assuming 20 days/month
-        sharpe_ratio = (group['return%'].mean() / group['return%'].std()) * np.sqrt(20) if group['return%'].std() != 0 else 0
+        sharpe_ratio = (group['return'].mean() / group['return'].std()) * np.sqrt(20) if group['return'].std() != 0 else 0
         
         # Get the maximum drawdown for the month (calculated earlier)
         max_drawdown = monthly_drawdown[month]
@@ -85,7 +85,7 @@ def calculate_monthly_pnl_metrics(daily_pnl_summary):
             'to': group['to'].iloc[-1][:4],
             'long': 10,
             'short': -10,
-            'return%': ret,
+            'return': ret,
             'sharpe': sharpe_ratio,
             'turnover': turnover,
             'max_drawdown': max_drawdown
